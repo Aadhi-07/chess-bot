@@ -1,0 +1,59 @@
+{
+  "name": "Chess Assistant Runner",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "id": "2",
+      "name": "Run Chess Assistant Script",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "parameters": {
+        "command": "python3 /path/to/main.py",
+        "options": {
+          "output": "json"
+        }
+      }
+    },
+    {
+      "id": "3",
+      "name": "Console Output",
+      "type": "n8n-nodes-base.console",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "parameters": {
+        "value": "Best Move: {{$json.best_move}} | FEN: {{$json.fen}}"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Run Chess Assistant Script",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Chess Assistant Script": {
+      "main": [
+        [
+          {
+            "node": "Console Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

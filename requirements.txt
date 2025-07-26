@@ -1,0 +1,4 @@
+opencv-python
+pillow
+python-chess
+pyautogui
